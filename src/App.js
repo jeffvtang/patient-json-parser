@@ -54,22 +54,37 @@ class App extends Component {
     }
   }
 
+  enterCheck = evt => {
+    if (evt.key == "Enter") {
+      this.setState({ obj: JSON.parse(evt.target.value) });
+      evt.target.value = "";
+    }
+  }
+
   render() {
     console.log(this.state.obj)
     const obj = this.state.obj
+    
     return (
       <div>
-          <h1>Sample Patient Parser</h1>
-          <div>Name of patient: {obj.name[0].given + ' ' + obj.name[0].family}</div>
-          <div>Organization name: {obj.managingOrganization.display}</div>
-          <div>Gender: {obj.gender}</div>
-          <div>Number of conditions they have: {obj.conditions.length}</div>
-          <div>List of all conditions:</div>
-          <ul>
-          {obj.conditions.map((condition) => (
-          <li>{condition}</li>
-          ))}
-          </ul>
+        <h1>Sample Patient Parser</h1>
+        <div>Name of patient: {obj.name[0].given + ' ' + obj.name[0].family}</div>
+        <div>Organization name: {obj.managingOrganization.display}</div>
+        <div>Gender: {obj.gender}</div>
+        <div>Number of conditions they have: {obj.conditions.length}</div>
+        <div>List of all conditions:</div>
+        <ul>
+        {obj.conditions.map((condition, i) => (
+          <li key={i}>{condition}</li>
+        ))}
+        </ul>
+        <div>Enter new JSON data below to parse</div>
+        <textarea type="text"
+        onKeyPress={this.enterCheck}
+        style={{height: "40em", width: "50em"}}
+        size="20"
+        >
+        </textarea>
       </div>
     );
   }
